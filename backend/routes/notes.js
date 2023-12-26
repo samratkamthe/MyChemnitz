@@ -23,7 +23,7 @@ router.post('/addnotes',fetchuser,[
 ],async(req,res)=>{
     const error=validationResult(req)
     if (!error.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ error: error.array() });
       }
       try{
         const{title, description,tag}=req.body

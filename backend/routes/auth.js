@@ -19,7 +19,8 @@ router.post('/createuser',[
   //checking if there are any error if yes then return it in array form
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      success=false;
+      return res.status(400).json({ success,errors: errors.array() });
     }
     //finding if the user already exists 
     try{
@@ -48,7 +49,8 @@ router.post('/createuser',[
       }
      const authtoken= jwt.sign(data,JWT_SECRET);
      console.log(authtoken);
-    res.json({authtoken});
+     success=true;
+    res.json({success,authtoken});
 
     // res.send(user)
     }catch(error){
@@ -72,11 +74,13 @@ router.post('/login',[
     let user= await User.findOne({email})
     console.log(user)
     if(!user){
-      return res.status(400).json({error:"please try to log with correct credientials "})
+      success=false;
+      return res.status(400).json({success,error:"please try to log with correct credientials "})
     }
     const passwordCompare= await bcrypt.compare(password,user.password)
     if(!passwordCompare){
-      return res.status(400).json({error:"please try to log with correct credientials "})
+      success=false;
+      return res.status(400).json({success,error:"please try to log with correct credientials "})
     }
     const data={
       user:{
@@ -86,7 +90,8 @@ router.post('/login',[
     }
     console.log(data)
     const authtoken=jwt.sign(data,JWT_SECRET);
-    res.json({authtoken})
+    success=true;
+    res.json({success,authtoken})
 
   }catch(error){
     console.error(error.message);
