@@ -32,14 +32,14 @@ router.post('/createuser',[
     //req.body is the one which we actully send to the server so we will take specific values from it like name,email,password and stick it to our schema
     const salt=await bcrypt.genSalt(10);
     const secPass= await bcrypt.hash(req.body.password,salt);
-    console.log(user)
+    // console.log(user)
     user=await User.create({
         name: req.body.name,
         password: secPass,
         email: req.body.email
 
       })
-    console.log(user)
+    // console.log(user)
 
       //for authentication with the help of the id of the user 
       const data={
@@ -48,7 +48,7 @@ router.post('/createuser',[
         }
       }
      const authtoken= jwt.sign(data,JWT_SECRET);
-     console.log(authtoken);
+    //  console.log(authtoken);
      success=true;
     res.json({success,authtoken});
 
@@ -72,7 +72,7 @@ router.post('/login',[
   const {email,password}=req.body;
   try{
     let user= await User.findOne({email})
-    console.log(user)
+    // console.log(user)
     if(!user){
       success=false;
       return res.status(400).json({success,error:"please try to log with correct credientials "})
@@ -88,13 +88,13 @@ router.post('/login',[
       }
 
     }
-    console.log(data)
+    // console.log(data)
     const authtoken=jwt.sign(data,JWT_SECRET);
     success=true;
     res.json({success,authtoken})
 
   }catch(error){
-    console.error(error.message);
+    // console.error(error.message);
     res.status(500).send("Internal server error ")                                    
   }
 })
@@ -103,13 +103,13 @@ router.post('/login',[
 router.post('/getuser',fetchuser,async(req,res)=>{
   try{
     userId=req.user.id;
-    console.log('userId')
-    console.log(userId)
+    // console.log('userId')
+    // console.log(userId)
    const  user=await User.findById(userId).select("-password")
    res.send(user)
 
   }catch(error){
-    console.error(error.message);
+    // console.error(error.message);
     res.status(500).send("Internal server error ")                                    
   }
 })

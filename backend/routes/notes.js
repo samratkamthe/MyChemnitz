@@ -8,12 +8,12 @@ var fetchuser=require("../middleware/fetchuser")
 router.get('/getnotes',fetchuser,async(req,res)=>{
 try{
     const notes=await Notes.find({user:req.user.id})
-    console.log({user:req.user.id})
+    // console.log({user:req.user.id})
    
     res.json(notes)
 }catch (error){
     res.status(401).send({error:"please check the authentication"})
-    console.log(error)
+    // console.log(error)
 }
 })
 //ROUTE :2 we are adding the notes to the notes database
@@ -33,7 +33,7 @@ router.post('/addnotes',fetchuser,[
         const savedNote=await note.save()
         res.json(savedNote)
       }catch(error){
-       console.log(error.message);
+    //    console.log(error.message);
         res.status(500).send("Internal server error ")
       }
 })
@@ -58,7 +58,7 @@ router.put('/updatenote/:id',fetchuser,async(req,res)=>{
  note=await Notes.findByIdAndUpdate(req.params.id,{$set:newNotes},{new:true});
  res.json({note});
     }catch(error){
-        console.log(error.message);
+        // console.log(error.message);
          res.status(500).send("Internal server error ")
        }
 
@@ -79,7 +79,7 @@ try{
  res.send("The Note is Deleted Successfully ")
 
 }catch(error){
-    console.log(error.message);
+    // console.log(error.message);
      res.status(500).send("Internal server error ")
    }
 })

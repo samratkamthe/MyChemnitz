@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { json } from "react-router-dom";
+
 import NoteContext from "./noteContext";
 
 
@@ -17,12 +17,12 @@ const NoteState=(props)=>{
           method:'GET',
           headers:{
             'Content-Type':'application/json',
-            'auth-token':' eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU4Mjg5M2FmY2I4NDVmODNjZGFiMzNhIn0sImlhdCI6MTcwMzA2NDk2N30.9C2d4tC3YEpbANXH_lVNntmlS3P9G6J4o4m492QYsns'
+            'auth-token':localStorage.getItem('token')
            
           },
         })
         const json=await response.json()
-        console.log(json)
+        // console.log(json)
         setNotes(json)
       }
 ////////////////////////////////////////////////////     A D D    N O T E    //////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@ const NoteState=(props)=>{
           method:'POST',
           headers:{
             'Content-Type':'application/json',
-            'auth-token':' eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU4Mjg5M2FmY2I4NDVmODNjZGFiMzNhIn0sImlhdCI6MTcwMzA2NDk2N30.9C2d4tC3YEpbANXH_lVNntmlS3P9G6J4o4m492QYsns'
+            'auth-token':localStorage.getItem('token')
            
           },
           body:JSON.stringify({title,description,tag})
@@ -46,11 +46,12 @@ const NoteState=(props)=>{
       //Delete a Note 
       //API CALL For Delete 
       const deleteNote=async(id)=>{
+        // eslint-disable-next-line
       const response=await fetch(`${host}/api/notes/deletenote/${id}`,{
         method:'DELETE',
         headers:{
           'Content-Type':'application/json',
-          'auth-token':' eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU4Mjg5M2FmY2I4NDVmODNjZGFiMzNhIn0sImlhdCI6MTcwMzA2NDk2N30.9C2d4tC3YEpbANXH_lVNntmlS3P9G6J4o4m492QYsns'
+          'auth-token':localStorage.getItem('token')
          
         },
         
@@ -71,11 +72,12 @@ const NoteState=(props)=>{
           method:'PUT',
           headers:{
             'Content-Type':'application/json',
-            'auth-token':' eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU4Mjg5M2FmY2I4NDVmODNjZGFiMzNhIn0sImlhdCI6MTcwMzA2NDk2N30.9C2d4tC3YEpbANXH_lVNntmlS3P9G6J4o4m492QYsns'
+            'auth-token':localStorage.getItem('token')
            
           },
           body:JSON.stringify({title,description,tag})
         })
+        // eslint-disable-next-line
         const json=response.json();
 
         //Logic to edit in client 
@@ -94,6 +96,9 @@ const NoteState=(props)=>{
 
         
       }
+//////////////////////////////////////////////  G E T   N O T E/////////////////////////////////////////////////////////////
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 return(
     <NoteContext.Provider value={{notes,addNote,deleteNote,editNote,getNotes}}>

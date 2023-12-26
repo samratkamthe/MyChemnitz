@@ -19,13 +19,18 @@ const Login = (props) => {
             },
             body:JSON.stringify({email:credentials.email,password:credentials.password})
           })
-          const json=await response.json()
+          const json=await response.json();
+    //        const getUsername = () => {
+    //   return json.name; 
+    // };
+          
           console.log(json)
           if(json.success){
             //save the auth token and redirect to the next page
             localStorage.setItem('token',json.authtoken);
             props.showAlert("Login","success","Successfully")
             navigate("/");
+            
             
 
           }
@@ -39,8 +44,10 @@ const Login = (props) => {
         setCredentials({...credentials,[e.target.name]:e.target.value})
       
     }
+   
   return (
     <div>
+       <h2>Login to access your Notes!</h2>
       <form onSubmit={handleSubmit}>
   <div className="mb-3">
     <label htmlFor="email" className="form-label">Email address</label>
@@ -58,4 +65,4 @@ const Login = (props) => {
   )
 }
 
-export default Login
+export  default Login
