@@ -17,7 +17,7 @@ const Signup = (props) => {
            console.log(json)
            if(json.success && signup.password===signup.cpassword){
              //save the auth token and redirect to the next page
-             localStorage.setItem('token',json.authtoken);
+            //  localStorage.setItem('token',json.authtoken);
              navigate("/login");
              props.showAlert("Acount Created SuccessFully","success","Successfully")
            }
@@ -35,12 +35,12 @@ const Signup = (props) => {
      <form onSubmit={handleSubmit}>
      <div className="mb-3">
     <label htmlFor="name" className="form-label">Name</label>
-    <input type="text" className="form-control" value={signup.name} name="name" onChange={onChange} id="name"/>
+    <input type="text" className="form-control" value={signup.name} name="name" onChange={onChange} id="name" maxLength={15} required/>
   </div>
 
   <div className="mb-3">
     <label htmlFor="email" className="form-label">Email address</label>
-    <input type="text" className="form-control" id="email" value={signup.email} name="email" onChange={onChange} aria-describedby="emailHelp"/>
+    <input type="text" className="form-control" id="email" value={signup.email} name="email" onChange={onChange} aria-describedby="emailHelp" required/>
     <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
   </div>
   <div className="mb-3">

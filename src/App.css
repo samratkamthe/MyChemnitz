@@ -47,7 +47,7 @@ i{
   
   position: absolute;
   top: 16px;
-  left: 1346px;
+  left: 152px;
 }
 .img {
   height: 26px;
@@ -56,3 +56,8 @@ i{
   left: -34px;
   cursor: pointer;
 }
+
+.navbar-nav {
+ 
+margin:0 auto;
+  }
