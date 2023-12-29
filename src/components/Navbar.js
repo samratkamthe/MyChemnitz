@@ -4,10 +4,12 @@ import { Link ,useLocation, useNavigate} from 'react-router-dom'
 // import Login from './Login';
 
 const Navbar = (props) => {
-
+//  const uname=props.userData.name
   let navigator=useNavigate();
       const handleLogout=()=>{
         localStorage.removeItem("token");
+        localStorage.removeItem("name");
+
         navigator("/login");
         props.showAlert("Logout","success","Successfully")
 
@@ -41,7 +43,7 @@ const Navbar = (props) => {
 
       <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
       <Link className="btn btn-primary mx-1" to="/signup"  role="button">Sign up</Link>
-      </form> :<div><button onClick={handleLogout} className="btn btn-primary mx-2">Logout</button></div>} 
+      </form> :<div><button onClick={handleLogout} className="btn btn-primary mx-2">Logout</button><p  className="users" style={{color:"white"}}><img className="img" src='https://cdn-icons-png.flaticon.com/512/4315/4315730.png' alt='User'/>{localStorage.getItem('name')}</p></div>} 
 
 
     </div>

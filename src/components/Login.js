@@ -14,31 +14,39 @@ const Login = (props) => {
             method:'POST',
             headers:{
               'Content-Type':'application/json',
-              
-             
             },
             body:JSON.stringify({email:credentials.email,password:credentials.password})
           })
           const json=await response.json();
-    //        const getUsername = () => {
-    //   return json.name; 
-    // };
-          
-          // console.log(json)
+            console.log(json)
           if(json.success){
             //save the auth token and redirect to the next page
             localStorage.setItem('token',json.authtoken);
-            props.showAlert("Login","success","Successfully")
+            //////////////////////////////////////////////////////////////////////////////////////////
             navigate("/");
-            
-            
-
           }
           else{
             props.showAlert("Invalid credentials","danger","Error")
             // alert("Invalid Credentials")
           }
-
+          
+          const resp=await fetch("http://localhost:5000/api/auth/getuser",{
+            method:'POST',
+            headers:{
+              'auth-token':localStorage.getItem('token')
+            },
+            
+          })
+          const note=await resp.json();
+          const userName = note.name;
+          // const userEmail= note.email;
+        
+          if(localStorage.getItem('token')){
+            localStorage.setItem('name',userName);
+          // props.fetchuser(userName,userEmail)
+          }
+          props.showAlert("Login","success","Successfully")
+          //save to local storage and access from there
     }
     const onChange=(e)=>{
         setCredentials({...credentials,[e.target.name]:e.target.value})
@@ -59,7 +67,7 @@ const Login = (props) => {
     <input type="password" className="form-control" name="password" value={credentials.password} onChange={onChange} id="password"/>
   </div>
   
-  <button type="submit" className="btn btn-primary" >Submit</button>
+  <button type="submit" className="btn btn-primary" >Login</button>
 </form>
     </div>
   )

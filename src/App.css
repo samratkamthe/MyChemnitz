@@ -43,7 +43,16 @@ i{
 }
 
 
-.form-floating>.form-control, .form-floating>.form-select {
-  height: calc(3.5rem + -7px)!important;
-  line-height: 1.25;
+.users {
+  
+  position: absolute;
+  top: 16px;
+  left: 1346px;
+}
+.img {
+  height: 26px;
+  width: 28px;
+  position: absolute;
+  left: -34px;
+  cursor: pointer;
 }
