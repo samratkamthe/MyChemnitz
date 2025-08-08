@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 .App {
   text-align: center;
 }
@@ -45,9 +48,9 @@ i{
 
 .users {
   
-  position: absolute;
-  top: 16px;
-  left: 152px;
+      position: absolute;
+    top: 16px;
+    right: 106px;
 }
 .img {
   height: 26px;
@@ -61,3 +64,77 @@ i{
  
 margin:0 auto;
   }
+.feature-desc-font{
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+.WholoBookMark::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+    background-image: url('https://cdn.pixabay.com/photo/2013/07/12/15/19/world-map-149634_1280.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+
+  z-index: -11;
+  opacity: 0.3;
+}
+.WholoBookMark{
+  height: 75vh;
+}
+.bookmark-scroll-container {
+  height: 75vh; 
+  overflow-y: auto;
+  overflow-x: hidden;
+z-index: 1;
+  padding: 10px;
+  border-top: 2px solid #333;
+  border-bottom: 2px solid #333;
+}
+#MapPgBg::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+    background-image: url('https://www.ardmediathek.de/img?imwidth=1920&url=https%3A%2F%2Fapi.ardmediathek.de%2Fimage-service%2Fimages%2Furn%3Aard%3Aimage%3A4db632fd2ae4e3a8%3Fch%3D1df3bf5ff47277c3%26w%3D{width}');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+
+  z-index: -11;
+  opacity: 0.3;
+}
+#Homebg::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+    background-image: url('https://cdn.pixabay.com/photo/2020/02/18/11/02/map-4859139_1280.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+
+  z-index: -11;
+  opacity: 0.5;
+}
+#UpdatePbg::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+    background-image: url('https://th.bing.com/th/id/R.5d9605adabf10d31f0d4273d8d6a872b?rik=IiStlmRcRsPPCg&riu=http%3a%2f%2fcdn.wallpapersafari.com%2f65%2f74%2fG2rLYa.jpg&ehk=01k%2bVrxsAoF9IMBeyDqnhyORLXhTW9NOrPqg03ldP38%3d&risl=&pid=ImgRaw&r=0');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+
+  z-index: -11;
+  opacity: 0.7;
+}

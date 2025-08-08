@@ -8,7 +8,7 @@ import Notes from './Notes'
 const Home = (props) => {
     const {showAlert}=props
   return (
-    <div>
+    <div id="Homebg">
       <Notes  showAlert={showAlert}/>
     </div>
   )

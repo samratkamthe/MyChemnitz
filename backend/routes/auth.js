@@ -1,10 +1,15 @@
 const express =require("express");
+
 const router =express.Router();
 const bcrypt = require('bcryptjs');
 const User=require('../models/User');
 var jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
-const JWT_SECRET="Samratisagoodb$oy";
+
+
+const JWT_SECRET=process.env.JWT_SECRET_STR;
+// console.log(process.env.JWT_SECRET_STR)
+
 var fetchuser=require('../middleware/fetchuser')
 
 
@@ -36,10 +41,11 @@ router.post('/createuser',[
     user=await User.create({
         name: req.body.name,
         password: secPass,
-        email: req.body.email
+        email: req.body.email,
+        location:req.body.location
 
       })
-    // console.log(user)
+    // console.log('user creaTED >>>>>>>', user)
 
       //for authentication with the help of the id of the user 
       const data={
@@ -47,6 +53,7 @@ router.post('/createuser',[
           id:user.id
         }
       }
+      // console.log(process.env.JWT_SECRET_STR)
      const authtoken= jwt.sign(data,JWT_SECRET);
     //  console.log(authtoken);
      success=true;
@@ -114,16 +121,40 @@ router.post('/getuser',fetchuser,async(req,res)=>{
   }
 })
 
+// PUT /api/auth/updateuser
+router.put('/updateuser', fetchuser, async (req, res) => {
+  const { name, location } = req.body;
+
+  const newUserData = {};
+  if (name) newUserData.name = name;
+  if (location) newUserData.location = location;
+
+  try {
+    let user = await User.findById(req.user.id);
+    if (!user) return res.status(404).send("User not found");
+
+    user = await User.findByIdAndUpdate(req.user.id, { $set: newUserData }, { new: true });
+    res.json({ success: true, user });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+//DELETE User 
+router.delete('/deleteuser', fetchuser, async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.user.id);
+    res.json({ success: true, message: "User deleted successfully" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
 
 
 
 module.exports=router
 
 
-// npm i bcryptjs 
-// npm i jsonwebtoken
-
-
- // const user=User(req.body)
-    // user.save()
-    // console.log(req.body)

@@ -1,5 +1,8 @@
 const mongoose=require('mongoose');
-const mongoURI="mongodb://127.0.0.1:27017/samrat"
+// const mongoURI="mongodb://127.0.0.1:27017/ChemnitzDbUser"
+require('dotenv').config({ path: './.env' });
+
+const mongoURI=process.env.Chemnitz_Db
 
 
 const connectToMongo = async () => {

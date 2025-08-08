@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 const Login = (props) => {
    const [credentials,setCredentials]=useState({email:"",password:""})
    let navigate = useNavigate();
+  const apiUrl=process.env.REACT_APP_API_URI
+
 
 
   const  handleSubmit=async(e)=>{
         e.preventDefault();
         
-        const response=await fetch("http://localhost:5000/api/auth/login",{
+        const response=await fetch(`${apiUrl}/api/auth/login`,{
             method:'POST',
             headers:{
               'Content-Type':'application/json',
@@ -18,19 +20,19 @@ const Login = (props) => {
             body:JSON.stringify({email:credentials.email,password:credentials.password})
           })
           const json=await response.json();
-            console.log(json)
+            // console.log(json)
           if(json.success){
             //save the auth token and redirect to the next page
             localStorage.setItem('token',json.authtoken);
-            //////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////
             navigate("/");
           }
           else{
-            props.showAlert("Invalid credentials","danger","Error")
+           return props.showAlert("Invalid credentials","danger","Error")
             // alert("Invalid Credentials")
           }
           
-          const resp=await fetch("http://localhost:5000/api/auth/getuser",{
+          const resp=await fetch(`${apiUrl}/api/auth/getuser`,{
             method:'POST',
             headers:{
               'auth-token':localStorage.getItem('token')
@@ -55,19 +57,25 @@ const Login = (props) => {
    
   return (
     <div>
-       <h2>Login to access your Notes!</h2>
+       <h2>Login to access your Account!</h2>
       <form onSubmit={handleSubmit}>
   <div className="mb-3">
     <label htmlFor="email" className="form-label">Email address</label>
     <input type="email" className="form-control" id="email" value={credentials.email} name="email" onChange={onChange} aria-describedby="emailHelp"/>
-    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+    <div id="emailHelp" className="form-text">Your email will never be shared with anyone else.</div>
   </div>
   <div className="mb-3">
     <label htmlFor="password" className="form-label">Password</label>
     <input type="password" className="form-control" name="password" value={credentials.password} onChange={onChange} id="password"/>
   </div>
   
-  <button type="submit" className="btn btn-primary" >Login</button>
+  <button 
+  type="submit"  
+  className="btn btn-primary" 
+  disabled={!credentials.email || !credentials.password}
+>
+  Login
+</button>
 </form>
     </div>
   )

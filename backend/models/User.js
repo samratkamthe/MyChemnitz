@@ -14,6 +14,10 @@ const UserSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    location:{
+        type:String,
+        required:true
+    },
     date:{
         type:Date,
         default:Date.now
@@ -29,10 +33,3 @@ module.exports=mongoose.model('user',UserSchema)
 
 
 
-// var contactSchema = new mongoose.Schema({
-//     name:String,
-//     email:String,
-//     phone:String,
-//     address:String
-//   });
-// var Contact= mongoose.model('Contact',contactSchema)

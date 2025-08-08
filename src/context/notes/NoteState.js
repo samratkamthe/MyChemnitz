@@ -4,15 +4,24 @@ import NoteContext from "./noteContext";
 
 
 const NoteState=(props)=>{
-  const host="http://localhost:5000"
+ 
+  const host=process.env.REACT_APP_API_URI
+
     const notesInitial=[]
+    const BookMarkInitial=[]
+
 
       // eslint-disable-next-line 
       const[notes,setNotes]=useState(notesInitial)
+      const[booked,setBooked]=useState(BookMarkInitial)
+      
+      
+
 ////////////////////////////////////////////////////     G E T  N O T E    ///////////////////////////////////////////////////////////////
       //GET AL NOTES
        const getNotes=async()=>{
         //Server side add
+       
         const response=await fetch(`${host}/api/notes/getnotes`,{
           method:'GET',
           headers:{
@@ -59,7 +68,7 @@ const NoteState=(props)=>{
       // const json= await response.json()
       // console.log(json)
       ///Logic
-        console.log("This note is deleted with id:"+id)
+        // console.log("This note is deleted with id:"+id)
         const newNotes=notes.filter((note)=>{return note._id!==id});
         setNotes(newNotes)
         
@@ -82,7 +91,7 @@ const NoteState=(props)=>{
 
         //Logic to edit in client 
         let newNotes=JSON.parse(JSON.stringify(notes))
-        console.log("these are notes",newNotes)
+        // console.log("these are notes",newNotes)
         for(let index=0; index<newNotes.length; index++){
           const element=newNotes[index];
           if(element._id===id){
@@ -96,12 +105,72 @@ const NoteState=(props)=>{
 
         
       }
-//////////////////////////////////////////////  G E T   N O T E/////////////////////////////////////////////////////////////
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////GET Bookmarks/////////////////////////////////////////////////////////
+const fetchBookmarks = async () => {
+  // console.log("Fetch runned")
+  const response = await fetch(`${host}/api/bookmarks/getBookmarks`, {
+    method: 'GET',
+    headers: {
+      'auth-token': localStorage.getItem('token')
+    }
+  });
+
+  const data = await response.json();
+  setBooked(data);
+};
+
+//////////////////////////////////////////////  ADD   Bookmark/////////////////////////////////////////////////////////////
+ const addBookmarkNote=async(name, amenity, tourism, description, website,LocId )=>{
+  // console.log(LocId)
+        //Server side add
+        const response=await fetch(`${host}/api/bookmarks/save`,{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json',
+            'auth-token':localStorage.getItem('token')
+           
+          },
+          body:JSON.stringify({ name, amenity, tourism, description, website,LocId })
+          
+        })
+        const savedBookm=await response.json();
+        // setBooked(booked.concat(savedBookm))
+         setBooked(prev => [...prev, savedBookm]);
+        
+      }
+//////////////////////////////////////////////  DELETE  Bookmark/////////////////////////////////////////////////////////////
+
+const deleteBookmark=async(id)=>{
+        // eslint-disable-next-line
+      const response=await fetch(`${host}/api/bookmarks/deletebookmark/${id}`,{
+        method:'DELETE',
+        headers:{
+          'Content-Type':'application/json',
+          'auth-token':localStorage.getItem('token')
+         
+        },
+        
+      });
+      // const json= await response.json()
+      // console.log(json)
+      ///Logic
+        // console.log("This note is deleted with id:"+id)
+        const newBookmarks=booked.filter((book)=>{return book._id!==id});
+        setBooked(newBookmarks)
+        
+      }
+
+
+      
+
+        
+
+
 return(
-    <NoteContext.Provider value={{notes,addNote,deleteNote,editNote,getNotes}}>
+    <NoteContext.Provider value={{notes,addNote,deleteNote,editNote,getNotes,addBookmarkNote,fetchBookmarks,booked,deleteBookmark}}>
         {props.children}
 
     </NoteContext.Provider>

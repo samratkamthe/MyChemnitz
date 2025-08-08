@@ -6,6 +6,7 @@ import AddNote from './AddNote'
 import { useNavigate } from 'react-router-dom'
 
 
+
 const Notes = (props) => {
     const context=useContext(noteContext)
    let navigator= useNavigate();
@@ -15,7 +16,7 @@ const Notes = (props) => {
       getNotes();
       }
       else{
-        navigator("/login")
+        navigator("/mapview")
       }
 // eslint-disable-next-line
     },[])
@@ -50,7 +51,7 @@ const Notes = (props) => {
         <AddNote showAlert={props.showAlert}/>
         
 <button style={{display:"none"}} ref={ref} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
+  Edit Form Pop
 </button>
 
 
@@ -64,7 +65,7 @@ const Notes = (props) => {
       <div className="modal-body">
       <form>
   <div className="mb-3">
-    <label htmlFor="title" className="form-label">Title</label>
+    <label htmlFor="title" className="form-label">Location</label>
     <input type="text" value={note.etitle} className="form-control" id="etitle" name="etitle" aria-describedby="emailHelp" onChange={onChange} minLength={3} required/>
     
   </div>
@@ -87,14 +88,19 @@ const Notes = (props) => {
     </div>
   </div>
 </div>
-       <div className="container  ">
+       <div className="container " >
       <h1>Your Notes</h1>
-      <div className="row">
+      <div className="row "  style={{
+    maxHeight: "180px",       
+    overflowY: "auto",
+    padding: "10px",msOverflowStyle: "none",
+    scrollbarWidth: "none" 
+  }}>
       <div className="container text-center ">
         {notes.length===0 && 'No Notes to display'}
         </div>
       {notes.map((note)=>{
-        return  <div className='col-md-3' key={note._id}>
+        return  <div className='col-md-3'   key={note._id}>
          <Noteitem note={note} updateNote={updateNote} showAlert={props.showAlert}/>
          </div>
       })}
